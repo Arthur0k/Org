@@ -1,4 +1,4 @@
 * TODO learn emacs
   DEADLINE: <2018-06-21 Thu 09:00> SCHEDULED: <2018-06-21 Thu 07:00>
 * TODO learn python
-* TODO Happy hacking emacs
+  SCHEDULED: <2018-06-21 Thu 20:00> DEADLINE: <2018-06-21 Thu 18:00>
