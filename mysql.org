@@ -1,0 +1,16 @@
+* 修改密码
+1.mysqladmin -u名字 -p密码 password 新密码
+2.直接在navicat修改
+** 忘记密码修改
+(1) sudo vim /etc/my.cnf
+    加入skip-grant-tables
+(2) 重启mysql服务，使配置文件生效
+    systemctl restart mysqld
+或者 [root@pavilion 16:15 hp]# service mysqld restart
+(3) 登录mysql，执行如下sql语句，括号内为新密码
+    mysql> use mysql
+    mysql> update user set authentication_string=password('密码') where user='root';
+    mysql> flush privileges;
+    mysql> quit
+(4) 注释掉原本修改的参数并重启mysql服务
+    ＃skip-grant-tables
