@@ -14,3 +14,5 @@
     mysql> quit
 (4) 注释掉原本修改的参数并重启mysql服务
     ＃skip-grant-tables
+*重启mysql服务
+1systemctl restart mysql
