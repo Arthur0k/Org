@@ -1,0 +1,505 @@
+#+title:知识网络
+
+* 知识网络
+- [[Linux]]
+  - [[Linux 命令]]
+- [[python]]
+  - [[数据结构与算法]]
+    - [[顺序表]]
+    - [[链表]]
+      - [[单向链表]]
+      - [[双向链表]]
+    - [[栈与队列]]
+    - [[排序与搜索]]
+      - [[选择排序]]
+      - [[冒泡排序]]
+      - [[插入排序]]
+      - [[希尔排序]]
+      - [[快速排序]]
+      - [[归并排序]]
+      - [[二分查找]]
+    - [[二叉树]]
+  - [[基础语法]]
+    - [[闭包]]
+    - 装饰器 迭代器 可迭代对象
+    - 文件
+    - 字符串
+    - 列表 元组
+    - 字典
+    - [[类]]
+      - [[魔法属性]]
+  - [[正则表达式]]
+    - [[表示分组]]
+    - [[表示字符]]
+    - [[表示数量]]
+    - 表示边界
+  - 系统编程
+  - 网络编程
+- [[Git]]
+- [[学习中遇到的问题]]
+- [[mongodb]]
+  - [[命令]]
+- [[书单]]
+
+* Linux
+** Linux 命令
+
+* 正则表达式
+** 表示分组
+** 表示边界
+** 表示数量
+** 表示字符
+   - .::可以表示任意字符除\n外
+   - []::可取[]内的任一元素 :其中^表示其中的元素取反
+   - \d::表示0-9的数字
+ - \D::表示\d的取反
+ - \w::表示字符a-z A-Z 0-9 _
+   - \W::表示\w的取反
+   - \s::所有的空格
+   - \S::\s的取反
+* Git
+* python
+** 基础语法
+python中一切皆对象:封装,继承,多态
+*** 类
+元类:type(name, (父类), {属性})
+#+BEGIN_SRC python
+ Person = type(Person, (), {"name":"xaowang"})
+ p = Person()
+ p.name
+
+ 运行结果:
+        'kaite'
+#+END_SRC
+**** 魔法属性
+| ~__new__~        | 当实例对象创建时,调用父类方法__new__创建一个对象并将其返回 |
+| ~__init__~       | 方法__init__引用该对象并进行初始化                         |
+| ~__str__~        | 当print实例对象时打印的值就是该方法return的值              |
+| ~__call__~       | 当实例被调用时对调用该方法                                 |
+| ~__del__~        | 程序结束时,某些对象还存在就会调用该方法进行垃圾回收        |
+| ~__getattr__~    | 对象属性找不到时就会调用                                   |
+| ~__getattribute~ | 属性拦截器,当对象调用属性时会第一时间调用该方法            |
+| ~__slots__~      | 该属性能限制动态的添加哪些属性                                        |
+**** 多态
+python是动态类型语言,可以动态的添加属性,方法
+#+BEGIN_SRC python
+  class Person(object):
+    def __init__(self):
+
+
+#+END_SRC
+** 数据结构与算法
+*** 顺序表
+ 结构：表头信息和数据区.
+ #+BEGIN_EXAMPLE
+          +----------+
+          |    8     | (容量)
+ 表头信息<---------------
+          |    3     | (元素个数)
+      ---------------------
+        0 |   345    |
+          +----------+     数据区
+        1 |    2     |
+          +----------+
+        2 |    4     |
+          +----------+
+        3 |          |
+          +----------+
+        4 |          |
+          +----------+
+        5 |          |
+          +----------+
+        6 |          |
+          +----------+
+        7 |          |
+          +----------+
+ #+END_EXAMPLE
+顺序表有两种表现形式：一体式和分离式结构,对于一体式而言当数据区更换为更大的存储空间时,
+只能整体变更即存储地址会发生变化;而分离式结构则不需要更改地址
+
+#+BEGIN_EXAMPLE
+ max num       数据区                                 +----------+
+|---+---+--------------------|                       |          | max
+| 8 | 4 |                    |                       +----------+
+|---+---+--------------------|                       |          | num                数据区
+           (一体式)                                   +----------+             +--------------------+
+                                                     |    ©-----|------------>|                    |
+                                                     +----------+             +--------------------+
+                                                                     (分离式)
+           #+END_EXAMPLE
+
+元素储存区的扩充的两种策略： 1,每次扩充增加固定数目的存储位置
+2,每次扩充容量加倍，如每次扩充增加一倍存储空间
+
+*** 链表
+**** 单向链表
+**** 双向链表
+*** 栈与队列
+栈：后入先出
++ 栈的操作
+  * Stack() 创建一个新的空栈
+  * push(item) 添加一个新的元素item到栈顶
+  * pop() 弹出栈顶元素
+  * peek() 返回栈顶元素
+  * is_empty() 判断栈是否为空
+  * size() 返回栈的元素个数
+#+BEGIN_SRC python
+class Stack():
+    """创建一个栈"""
+    def __init__(self):
+        self.__list = []
+
+    def push(self, item):
+        self.__list.append(item)
+
+    def pop(self):
+        if self.__list:
+            return self.__list.pop()
+        return None
+
+    def peek(self):
+        if self.__list:
+            return self.__list[-1]
+        return None
+
+    def is_empty(self):
+        if self.__list:
+            return False
+        return True
+
+    def size(self):
+        return len(self.__list)
+
+
+if __name__ == "__main__":
+    stack = Stack()
+    print(stack.is_empty())
+    stack.push(1)
+    print(stack.is_empty())
+    stack.push(2)
+    stack.push(3)
+    print(stack.pop())
+    print(stack.peek())
+    print(stack.size())
+#+END_SRC
+
+队列：先进先出
++ 操作：
+  * Queue() 创建一个空的队列
+  * enqueue(item) 往队列中添加一个item元素
+  * dequeue() 从队列头部删除一个元素
+  * is_empty() 判断一个队列是否为空
+  * size() 返回队列的大小
+#+BEGIN_SRC python
+class Queue():
+    """队列"""
+    def __init__():
+        self.__list = []
+
+    def enqueue(self, item):
+        self.__list.append(item)
+
+    def dequeue(self):
+        if self.__list:
+            self.__list.pop(0)
+        return None
+
+    def is_empty(self):
+        if self.__list:
+            return False
+        return True
+
+    def size(self):
+        return len(self.__list)
+
+
+if __name__ == "__main__":
+    queque = Queue()
+    queque.enqueue(1)
+    queque.dequeue(2)
+    print(queque.is_empty())
+    print(queque.size())
+#+END_SRC
+
+*** 排序与搜索
+**** 冒泡排序
+- 冒泡排序算法
+  - 比较相邻的元素。如果第一个比第二个大（升序），就交换他们两个。
+  - 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。
+  - 针对所有的元素重复以上的步骤，除了最后一个。
+  - 持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较
+#+BEGIN_SRC python
+  def bubble_sort(alist):
+      n = len(a)
+      for j in range(0, n-1):
+        # count = 0    优化
+          for i in range(0, n-1-j):
+              if a[i] > a[i+1]:
+                  a[i], a[i+1] = a[i+1], a[i]
+                # count +=1
+            # if count == 0
+                # break
+
+  bubble_sort(a)
+  print(a)
+
+
+  def bubble_sort(alist):
+      n = len(a)
+      for j in range(n-1, 0, -1):
+          for i in range(j):
+              if a[i] > a[i+1]:
+                  a[i], a[i+1] = a[i+1], a[i]
+
+
+  a = [22, 33, 55, 11, 3453, 79, 40]
+  bubble_sort(a)
+  print(a)
+#+END_SRC
+**** 选择排序
+- 选择排序算法:
+  - 将序列分为有序a和无序b两个序列
+  - 首先从b序列中选出最小(大)放到a序列的初始位置
+  - 然后再从b序列剩余的元素中选出最小(大)值依次添加到a序列末尾
+  - 重复操作,直到所有元素排序完毕
+
+图示如下
+[[~/Desktop/Selection.gif]]
+
+#+BEGIN_SRC python
+ def choose_sort(a):
+     """选择排序"""
+     n = len(a)
+     for j in range(n-1):
+         min = j
+         for i in range(j+1, n):
+             if a[min] > a[i]:
+                 min = i
+         if min != j:
+             a[j], a[min] = a[min], a[j]
+#+END_SRC
+**** 插入排序
+- 插入排序算法:
+  将序列分为有序a和无序b两个序列,从b序列中依次选取元素与a序列进行比对
+  并选择合适的位置插入,a序列逐步后移为插入的元素提供插入空间
+
+[[~/Desktop/insertion.gif]]
+
+#+BEGIN_SRC python
+def insert_sort(a):
+    """插入排序"""
+    n = len(a)
+    for j in range(1, n):
+        for i in range(j, 0, -1):
+            if a[i] < a[i-1]:
+
+#+END_SRC
+**** 希尔排序
+**** 快速排序
+- 算法步骤:
+  从数列中挑出一个元素，称为"基准"（pivot），
+  重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区结束之后，该基准就处于数列的中间位置。这个称为分区（partition）操作。
+  递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。
+
+#+BEGIN_SRC python
+  def quick_sort(a, star, end):
+      """快速排序"""
+
+    # 递归退出条件
+      if star >= end:
+          return
+
+      mid = a[star]
+      low = star
+      high = end
+
+    # 找出mid所在的位置
+      while low < high:
+          while low < high and a[high] > mid:
+              high -= 1
+          a[low] = a[high]
+
+          while low < high and a[low] < mid:
+              low += 1
+          a[high] = a[low]
+      a[low] = mid
+
+    # 调用自身对mid左右两边继续排序
+      quick_sort(a, star, low-1)
+      quick_sort(a, low+1, end)
+#+END_SRC
+**** 归并排序
+- 归并排序:
+  思想就是先递归分解数组，再合并数组
+  #+BEGIN_SRC python
+def merge_sort(alist):
+    """归并排序"""
+    if len(alist) <= 1:
+        return alist
+    n = len(alist)
+    n = n // 2
+    left = merge_sort(alist[:n])
+    right = merge_sort(alist[n:])
+
+    l, r = 0, 0
+    result = []
+    while l < len(left) and r < len(right):
+        if left[l] < right[r]:
+            result.append(left[l])
+            l += 1
+        else:
+            result.append(right[r])
+            r += 1
+    result += left[l:]
+    result += right[r:]
+    return result
+
+  #+END_SRC
+写代码遇到一个错误类型:
+TypeError: 'builtin_function_or_method' object is not subscriptable
+
+**** 二分查找
+*** 二叉树
+**** 二叉树
+二叉树是每个节点最多有两个子树的树结构.
+- 性质
+  - 第i层最有有2^(i-1)个节点
+  - 深度为k的二叉树最多有2^k-1个节点
+  - 所有叶节点的总和－1=所有度数为2的节点的总和
+  - n个节点的深度k=log(n+1)
+#+BEGIN_SRC python
+class Node(object):
+    """节点"""
+    def __init__(self, item=None):
+        self.elem = item
+        self.lchild = None
+        self.rchild = None
+
+
+class Tree(object):
+    """二叉树"""
+    def __init__(self):
+        self.root = None
+
+    def add(self, item):
+        "添加元素"
+        node = Node(item)
+        if self.root is None:
+            self.root = node
+            return
+        queue = [self.root]
+        while queue:
+            point = queue.pop(0)
+            if point.lchild is None:
+                point.lchild = node
+                return
+            else:
+                queue.append(point.lchild)
+                if point.rchild is None:
+                    point.rchild = node
+                    return
+                else:
+                    queue.append(point.rchild)
+#+END_SRC
+
+**** 二叉树的遍历
+- 广度优先（层次遍历）
+  #+BEGIN_SRC python
+    def breadth_travel(self):
+        "广度便利"
+        queue = []
+        if self.root:
+            queue.append(self.root)
+        else:
+            return
+        while queue:
+            node = queue.pop(0)
+            print(node.elem)
+            if node.lchild:
+                queue.append(node.lchild)
+            if node.rchild:
+
+  #+END_SRC
+- 深度优先
+  - 先序遍历
+    #+BEGIN_SRC python
+def pre_order(node):
+    """先序遍历"""
+    if node:
+        print(node.elem)
+        pre_order(node.lchild)
+        pre_order(node.rchild)
+    #+END_SRC
+  - 中序遍历
+    #+BEGIN_SRC python
+def in_order(node):
+    """中序遍历"""
+    if node:
+        in_order(node.lchild)
+        print(node.elem)
+        in_order(node.rchild)
+    #+END_SRC
+  - 后序遍历
+    #+BEGIN_SRC python
+def post_order(node):
+    """后序遍历"""
+    if node:
+        post_order(node.lchild)
+        post_order(node.rchild)
+        print(node.elem)
+    #+END_SRC
+
+* mongodb
+
+** 命令
+- 查询
+    db.集合名.find({条件})                                列出满足条件的文档
+    db.集合名.find({条件}).pretty()                       列出满足条件的格式化文档
+    db.集合名.find({条件}).pretty().sort({字段名,1或-1})   1为升序,-1为降序
+    db.集合名称.find({},{字段名称:1,...})                  1为显示,0为不显示
+- 添加
+    db.集合名.insert(文档)
+- 更新
+    db.集合名称.update(
+    <query>,
+    <update>,                                         匹配多行修改时 必须$set指定
+    {multi: <boolean>}                                其中如果不指定$set,将会覆盖匹配的文档
+    )
+- limit和skip
+    db.集合名.find().skip(num).limit(num)              limit(num)用于读取指定数量的文档,skip(num)跳过指定数量的文档
+- 统计个数
+    db.集合名.find({条件}).count()
+    db.集合名.count({条件})
+- 消除重复
+    db.集合名称.distinct('去重字段',{条件})               对数据去重
+- 聚合
+    db.集合名称.aggregate([{管道:{表达式}}])
+    # db.集合名称.aggregate([{$match:"$字段", {$group:{_id:"$字段", 自定义字段:{}}}, {$unwind:$name])
+- 常用管道
+    $group：将集合中的文档分组，可用于统计结果
+    $match：过滤数据，只输出符合条件的文档
+    $project：修改输入文档的结构，如重命名、增加、删除字段、创建计算结果
+    $sort：将输入文档排序后输出
+    $limit：限制聚合管道返回的文档数
+    $skip：跳过指定数量的文档，并返回余下的文档
+    $unwind：将数组类型的字段进行拆分
+- 常用表达式
+    $sum：计算总和，$sum:1同count表示计数
+    $avg：计算平均值
+    $min：获取最小值
+    $max：获取最大值
+    $push：在结果文档中插入值到一个数组中
+    $first：根据资源文档的排序获取第一个文档数据
+    $last：根据资源文档的排序获取最后一个文档数据
+- 备份
+    mongodump -h dbhost -d dbname -o dbdirectory
+      
+    -h：服务器地址，也可以指定端口号
+    -d：需要备份的数据库名称
+    -o：备份的数据存放位置，此目录中存放着备份出来的数据
+- 恢复
+    mongorestore -h dbhost -d dbname --dir dbdirectory
+    -h：服务器地址
+    -d：需要恢复的数据库实例
+    --dir：备份数据所在位置
+    
