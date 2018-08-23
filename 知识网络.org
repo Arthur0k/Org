@@ -36,7 +36,9 @@
   - 系统编程
   - 网络编程
 - [[Git]]
+  - [[首次初始化后push出现的问题]]
 - [[学习中遇到的问题]]
+  - 
 - [[mongodb]]
   - [[命令]]
 - [[书单]]
@@ -57,7 +59,6 @@
    - \W::表示\w的取反
    - \s::所有的空格
    - \S::\s的取反
-* Git
 * python
 ** 基础语法
 python中一切皆对象:封装,继承,多态
@@ -502,4 +503,9 @@ def post_order(node):
     -h：服务器地址
     -d：需要恢复的数据库实例
     --dir：备份数据所在位置
+* Git
     
+** 首次初始化后push出现的问题
+- git init后连接远程仓库git remote add origin <地址>
+- git pull --rebase origin master
+- git push -u origin master
