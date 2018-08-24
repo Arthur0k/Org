@@ -39,8 +39,16 @@
   - [[首次初始化后push出现的问题]]
 - [[学习中遇到的问题]]
   - 
-- [[mongodb]]
-  - [[命令]]
+- [[数据库]]
+  - [[mongodb]]
+    - [[命令]]
+  - [[redis]]
+    - [[值的5种类型]]
+      - [[string]]
+      - [[hash]]
+      - [[list]]
+      - [[set]]
+      - [[zset]]
 - [[书单]]
 
 * Linux
@@ -59,6 +67,7 @@
    - \W::表示\w的取反
    - \s::所有的空格
    - \S::\s的取反
+
 * python
 ** 基础语法
 python中一切皆对象:封装,继承,多态
@@ -450,33 +459,35 @@ def post_order(node):
         print(node.elem)
     #+END_SRC
 
-* mongodb
+* 数据库
 
-** 命令
-- 查询
+** mongodb
+
+*** 命令
++ 查询
     db.集合名.find({条件})                                列出满足条件的文档
     db.集合名.find({条件}).pretty()                       列出满足条件的格式化文档
     db.集合名.find({条件}).pretty().sort({字段名,1或-1})   1为升序,-1为降序
     db.集合名称.find({},{字段名称:1,...})                  1为显示,0为不显示
-- 添加
++ 添加
     db.集合名.insert(文档)
-- 更新
++ 更新
     db.集合名称.update(
     <query>,
     <update>,                                         匹配多行修改时 必须$set指定
     {multi: <boolean>}                                其中如果不指定$set,将会覆盖匹配的文档
     )
-- limit和skip
++ limit和skip
     db.集合名.find().skip(num).limit(num)              limit(num)用于读取指定数量的文档,skip(num)跳过指定数量的文档
-- 统计个数
++ 统计个数
     db.集合名.find({条件}).count()
     db.集合名.count({条件})
-- 消除重复
++ 消除重复
     db.集合名称.distinct('去重字段',{条件})               对数据去重
-- 聚合
++ 聚合
     db.集合名称.aggregate([{管道:{表达式}}])
     # db.集合名称.aggregate([{$match:"$字段", {$group:{_id:"$字段", 自定义字段:{}}}, {$unwind:$name])
-- 常用管道
++ 常用管道
     $group：将集合中的文档分组，可用于统计结果
     $match：过滤数据，只输出符合条件的文档
     $project：修改输入文档的结构，如重命名、增加、删除字段、创建计算结果
@@ -484,7 +495,7 @@ def post_order(node):
     $limit：限制聚合管道返回的文档数
     $skip：跳过指定数量的文档，并返回余下的文档
     $unwind：将数组类型的字段进行拆分
-- 常用表达式
++ 常用表达式
     $sum：计算总和，$sum:1同count表示计数
     $avg：计算平均值
     $min：获取最小值
@@ -492,20 +503,145 @@ def post_order(node):
     $push：在结果文档中插入值到一个数组中
     $first：根据资源文档的排序获取第一个文档数据
     $last：根据资源文档的排序获取最后一个文档数据
-- 备份
++ 备份
     mongodump -h dbhost -d dbname -o dbdirectory
       
     -h：服务器地址，也可以指定端口号
     -d：需要备份的数据库名称
     -o：备份的数据存放位置，此目录中存放着备份出来的数据
-- 恢复
++ 恢复
     mongorestore -h dbhost -d dbname --dir dbdirectory
     -h：服务器地址
     -d：需要恢复的数据库实例
     --dir：备份数据所在位置
+
+** redis
+redis是键－值的数据,键的类型是字符串,数据库的全部操作.点击查看[[http://redis.cn/commands.html#server][全部命令]]
+
+*** 值的5种类型
+**** string
+*命令*
+| 设置                            |
+|---------------------------------|
+| SET ~key value~                 |
+| SETEX ~key seconds value~       |
+| MSET ~key value [key value ..]~ |
+|---------------------------------|
+| 获取                            |
+|---------------------------------|
+| GET ~key~                       |
+| MGET ~key [key ...]~            |
+|---------------------------------|
+| 运算::要求值是数字                |
+|---------------------------------|
+| INCR ~key~                      |
+| INCRBY ~key increment~          |
+| DECR ~key~                      |
+| DECRBY ~key decrement~          |
+|---------------------------------|
+| 其他                            |
+|---------------------------------|
+| APPEND ~key value~              |
+| STRLEN ~key~                    |
+  
+**** hash
++ hash用于存储对象，对象的格式为键值对
+
+*命令*
+| 设置                                     |
+|------------------------------------------|
+| HSET ~key field value~                   |
+| HMSET ~key field value [field value ..]~ |
+|------------------------------------------|
+| 获取                                     |
+|------------------------------------------|
+| HGET ~key field~                         |
+| HMGET ~key field~                        |
+| HGETALL ~key~                            |
+| HKEYS ~key~                              |
+| HVALS ~key~                              |
+|------------------------------------------|
+| 其他                                     |
+|------------------------------------------|
+| HEXIST ~key field~                       |
+| HDEL ~key field [field ..]~              |
+| HSTRLEN ~key field~                      |
+
+**** list
++ 列表元素类型为string
++ 按照插入顺序排序
++ 在列表的头部或者尾部插入元素
+
+*命令*
+| 设置                                   |                        
+|----------------------------------------|                        
+| LPUSH ~key value [value ..]~           |                       
+| RPUSH ~key value [value ..]~           |                       
+| LINSERT ~key before\after pivot value~ | # 基于pivot插入元素      
+| LSET ~key index value~                 | # 设置指定索引的元素值    
+|----------------------------------------|
+|获取                                    |
+|----------------------------------------|
+| LPOP ~key~                             |
+| RPOP ~key~                             |
+| LRANGE ~key start stop~                |
+|----------------------------------------|
+| 其他                                   |
+|----------------------------------------|
+| LLEN key                               | 
+| LINDEX key index                       | # 返回索引对应的元素
+| LTRIM key start stop                   | # 剪裁列表
+
+**** set
++ 无序集合
++ 元素具有唯一性，不重复
+
+*命令*
+| 设置                          |
+|-------------------------------|
+| sadd ~key member [member ..]~ |
+|-------------------------------|
+| 获取                          |
+|-------------------------------|
+| smember ~key~                 |
+| scard ~key~                   | # 集合元素个数
+|-------------------------------|
+| 其他                          |
+|-------------------------------|
+| sinter ~key [key ..]~         | # 交集
+| sdiff ~key [key ..]~          | # 差集
+| sunion ~key [key ..]~         | # 并集
+| ismember ~key member~         |
+
+**** zset
++ 有序集合
++ 每个元素都会关联一个double类型的score，表示权重，通过权重将元素从小到大排序
++ 元素的score可以相同
+
+*命令*
+| 设置                                      |
+|-------------------------------------------|
+| zadd ~key score member [score member ..]~ |
+|-------------------------------------------|
+| 获取                                      |
+|-------------------------------------------|
+| ZRANGE ~key start stop~                   |
+| ZCARD ~key~                               |
+| ZCOUNT ~key min max~                      | # 返回有序集key中，score值在min和max之间的成员
+| ZSCORE ~key member~                       | # 返回有序集key中，成员member的score值
+**** 键的操作
+*命令*
+| KEYS ~pattern~        |
+| DEL ~key [key ..]~    |
+| TYPE ~key~            |
+| EXISTS ~key [key ..]~ |
+| EXPIRE ~key seconds~  |
+| TTL ~key~             |
+
 * Git
     
 ** 首次初始化后push出现的问题
 - git init后连接远程仓库git remote add origin <地址>
 - git pull --rebase origin master
 - git push -u origin master
+
