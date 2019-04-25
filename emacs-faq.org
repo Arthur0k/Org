@@ -1,0 +1,9 @@
+* Emacs-FAQ
+
+** Source code pro
+
+   步骤:
+   - npm install git://github.com/adobe-fonts/source-code-pro.git#release
+   - cd ~/node_modules/source-code-pro
+   - sudo mv 字体文件 /usr/share/fonts/source-code-pro
+   - sudo fc-cache

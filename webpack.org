@@ -1,0 +1,54 @@
+* webpack
+
+** Babel-loader
+
+   problem:
+   Module not found: Error: Can't resolve '@babel/runtime/helpers/createClass' in '/home/arthur/Desktop/st
+   udy-webpk/src'
+
+   resolved:
+   - npm install -D babel-loader @babel/core @babel/preset-env webpack webpack-cli
+   - npm install @babel/plugin-transform-runtime @babel/runtime^7.0.0-beta.55
+
+    #+begin_src javascript
+      module: {
+        rules: [
+          {
+            test: /\.m?js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env'],
+                plugins: ['@babel/plugin-transform-runtime']
+              }
+            }
+          }
+        ]
+      }
+
+    #+end_src
+
+** vue-loader
+
+   problem:
+   vue-loader加载不上的问题
+
+   resolved:
+   #+begin_src javascript
+     const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+     module.exports = {
+       entry: ..,
+       output: {},
+       plugins: [
+         new VueloaderPlugin()
+       ],
+       module: {
+       rules: [
+         { test: /\.vue/, use: 'vue-loaer'}
+       ]
+     }
+     }
+
+   #+end_src
