@@ -1,0 +1,8 @@
+* TODO learn emacs
+  DEADLINE: <2018-06-21 Thu 09:00> SCHEDULED: <2018-06-21 Thu 07:00>
+* TODO learn python
+  SCHEDULED: <2018-06-21 Thu 20:00> DEADLINE: <2018-06-21 Thu 18:00>
+* TODO happy hacking python
+  DEADLINE: <2018-06-21 Thu 22:00> SCHEDULED: <2018-06-21 Thu 21:00>
+
+append something

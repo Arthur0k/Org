@@ -1,0 +1,22 @@
+* 删除系统自带的python造成的后果
+** 后果
+＃桌面不显示
+＃系统自带的部分软件不可用
+＃home下的一些package失效
+** 解决
+0.1.sudo apt-get install ubuntu-minamal ubuntu-standard ubuntu-desktop
+在安装ubuntu－desktop的时候需要选择display manager:gnome3 gdm3 lightdm3;
+安装后可以使用以下命令进行切换
+＃sudo dpkg-reconfigure gdm3
+** 解压
+1以.rpm为扩展名的文件安装:
+ #rpm -i file.rpm 
+2以.rpm为扩展名的文件解压缩：
+ #rpm2cpio file.rpm | cpio -div 
+3以.deb为扩展名的文件安装：
+ #dpkg -i file.deb .
+4以.deb为扩展名的文件解压缩:
+ #dpkg-deb --fsys-tarfile file.deb | tar xvf - ar p
+file.deb data.tar.gz | tar xvzf – 
+5以.tar.gz/.tgz为扩展名的文件:
+ #tar xvzf file.tar.gz 
