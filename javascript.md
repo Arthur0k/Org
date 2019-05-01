@@ -28,8 +28,20 @@
 1. 如果浏览器支持HTML5，那么就可以一劳永逸地使用新的跨域策略：CORS了。
 
   Access-Control-Allow-Origin其中Origin代表本域,因为浏览器同源策略的原因，对于域不同的访问是禁止的
-  如果在服务器响应头中添加`Access-Control-Allow-Origin`为`*(或自己网站的ip)`
+  如果在服务器响应头中添加`Access-Control-Allow-Origin`为`*(或自己网站的ip)`,express框架中可添加如下代码
+
+  ```javascript
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1');
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
+  ```
   就可以直接利用Ajax进行请求了
+
 2. 利用JSONP，限制是只能发送GET请求，其原理是浏览器允许跨域引Javascript资源。
 ```html
 <html>
