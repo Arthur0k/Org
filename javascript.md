@@ -21,6 +21,72 @@
 `for x of items`
 
 ### Array
+### Object
+
+#### Object.setPrototypeOf() and Object.getPrototypeOf()
+```javascript
+a = {}
+a.__proto__ === Object.getPrototypeOf(a)  // true
+```
+
+`Object.getPrototypeof()`  ---  获取对象的prototype属性
+`Object.setPrototypeof()`  ---  设置对象的prototype属性
+
+---
+#### Object.assign()
+`Object.assign(target, source, source2, ...)`  --  将source的属性添加到target中，如果target中有相同的属性则会覆盖，且此方法是浅拷贝
+
+---
+#### Object.is()
+`Object.is(a, b)`判断两个对象是否相等（`===`），返回布尔值,
+其中与`===`不同的是:
+```javascript
++0 === -0    // true
+NaN === NaN //false
+Object.is(+0, -0)    // false
+Object.is(NaN, NaN) // true
+```
+---
+
+#### 遍历
+- Object.keys()
+- Object.values()
+- Object.entries()
+```javascript
+let obj = {a: 1, b: 2, c: 3}
+Object.keys(obj)  // [a, b, c]
+Object.values(obj)  // [1, 2, 3]
+Object.entries(obj)  // [['a', 1], ['b', 2], ['c', 3]]
+```
+- for ... in ...  // 遍历可枚举的属性包括继承的属性 (exclude Symbol)
+- Object.getOwnPropertyNames  //遍历自己的属性 (exclude Symbol)
+- Object.getOwnPropertySymbols //遍历自身的所有Symbol属性
+- Reflect.ownKeys // 自身的所有属性 不管`enumberable: true | false`
+
+---
+
+#### 解构赋值 and 扩展运算符
+>解构赋值必须是最后一个参数
+>扩展运算符等同Object.assign()方法
+```javascript
+const {x, y, ...z} = {x: 1, y: 2, d: 4, b: 5}
+x // 1
+y // 2
+z // {d: 4, b: 5}
+
+let a = {x: 1, y: 2, z: 3, d: 'foo'}
+let c = {...a}
+//等同于
+let c = Object.assign({}, a)
+
+let example = {ball: 'basketball', name: 'arthur'}
+let example2 = {age: 15, hobby: 'computer'}
+let target = {...example, ...example2}
+//等同于
+let target = Object.assign(example, example2)
+```
+
+
 ## 跨域请求问题
 
 解决方法：
